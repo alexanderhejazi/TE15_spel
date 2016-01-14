@@ -1,0 +1,36 @@
+<html>
+<head>
+<meta charset="utf-8">
+<script>
+var cash = 10000;
+
+function writeTxt(txt) {
+	document.getElementById("out").innerHTML = txt;
+}
+
+function set(id, val) {
+	document.getElementById(id).value = val;
+}
+function get(id) {
+	return document.getElementById(id).value;
+}
+
+function play() {
+	
+}
+function loaded() {
+	set("cash", cash);
+}
+</script>
+</head>
+<body onload="loaded();">
+<p>Satsa pengar på en siffra mellan 1 och 14</p>
+Cash $:<input type="text" id="cash"><br>
+Bet($):<input type="text" id="bet"><br>
+Bet on:<input type="text" id="beton"><br>
+
+<input type="button" value="BET" onclick="play();">
+
+<div id="out"></div>
+</body>
+</html>
