@@ -2,35 +2,63 @@
 <head>
 <meta charset="utf-8">
 <script>
-var cash = 10000;
-
-function writeTxt(txt) {
-	document.getElementById("out").innerHTML = txt;
-}
-
-function set(id, val) {
-	document.getElementById(id).value = val;
+function play() {
+	if(get("betsize") >= 5) {
+		if(get("betsize") <= getCash()) {
+			var correct = getBet();
+			var spot = Math.floor(Math.random()*37);
+			alert(spot);
+		} else {
+			log("Du har satsat mer än du har, din fattiga typ.");
+		}
+	} else {
+		log("Du har inte satsat tillräckligt.");
+	}
 }
 function get(id) {
-	return document.getElementById(id).value;
+	return parseInt(document.getElementById(id).value);
 }
-
-function play() {
-	
+function getCash() {
+	return parseInt(document.getElementById("cash").innerHTML);
 }
-function loaded() {
-	set("cash", cash);
+function setCash(cash) {
+	document.getElementById("cash").innerHTML = cash;
+}
+function log(txt) {
+	document.getElementById("log").innerHTML = txt;
+}
+function getBet() {
+	var ret;
+	for(var c = 0; c < document.getElementsByName("bet").length; c++) {
+		if(document.getElementsByName("bet")[c].checked) {
+			ret = c;
+		}
+	}
+	return ret;
 }
 </script>
 </head>
-<body onload="loaded();">
-<p>Satsa pengar på en siffra mellan 1 och 14</p>
-Cash $:<input type="text" id="cash"><br>
-Bet($):<input type="text" id="bet"><br>
-Bet on:<input type="text" id="beton"><br>
-
-<input type="button" value="BET" onclick="play();">
-
-<div id="out"></div>
+<body>
+<p id="cash">25000</p>
+<input type="text" id="betsize" value="5"><br>
+<input type="radio" name="bet" id="green">Grön(x7)<br>
+<input type="radio" name="bet" id="red" checked>Röd(x2)<br>
+<input type="radio" name="bet" id="black">Svart(x2)<br>
+<input type="button" value="SPIN" onclick="play();">
+<p id="log"></p>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
