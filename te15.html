@@ -9,23 +9,24 @@ function play() {
 			var spot = Math.floor(Math.random()*37);
 			if(spot == 0) { // Det blev grönt
 				if(correct == 0) { // Och vi gissade på grön. Vi fick rätt!! Woho!
-					setCash(getBetsize() * 20);
+					setCash(getCash() + (getBetsize() * 20));
 				} else {
 					setCash(getCash() - getBetsize()); // Ändrar cash till vad vi har nu minus vad vi satsade
 				}
 			} else if(spot > 18) { // Det blev rött
 				if(correct == 1) {
-					setCash(getBetsize() * 2);
+					setCash(getCash() + (getBetsize() * 2));
 				} else {
 					setCash(getCash() - getBetsize());
 				}
 			} else { // Det blev svart
 				if(correct == 2) {
-					setCash(getBetsize() * 2);
+					setCash(getCash() + (getBetsize() * 2));
 				} else {
 					setCash(getCash() - getBetsize());
 				}
 			}
+			log("Kulan landade på "+spot);
 		} else {
 			log("Du har satsat mer än du har, din fattiga typ.");
 		}
@@ -40,7 +41,7 @@ function getCash() {
 	return parseInt(document.getElementById("cash").innerHTML);
 }
 function getBetsize() {
-	return parseInt(document.getElementById("betsize").innerHTML);
+	return parseInt(document.getElementById("betsize").value);
 }
 function setCash(cash) {
 	document.getElementById("cash").innerHTML = cash;
@@ -62,7 +63,7 @@ function getBet() {
 <body>
 <p id="cash">25000</p>
 <input type="text" id="betsize" value="5"><br>
-<input type="radio" name="bet" id="green">Grön(x7)<br>
+<input type="radio" name="bet" id="green">Grön(x20)<br>
 <input type="radio" name="bet" id="red" checked>Röd(x2)<br>
 <input type="radio" name="bet" id="black">Svart(x2)<br>
 <input type="button" value="SPIN" onclick="play();">
