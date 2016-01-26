@@ -3,38 +3,37 @@
 <meta charset="utf-8">
 <script>
 function play() {
-	if(get("betsize") >= 5) {
-		if(get("betsize") <= getCash()) {
+	if(get("betsize") <= getCash()) {
+		if(get("betsize") >= 5) {
 			var correct = getBet();
 			var spot = Math.floor(Math.random()*37);
+			setCash(getCash() - getBetsize());
+			var winCheck = "du förlorade!";
 			if(spot == 0) { // Det blev grönt
 				if(correct == 0) { // Och vi gissade på grön. Vi fick rätt!! Woho!
 					setCash(getCash() + (getBetsize() * 20));
-				} else {
-					setCash(getCash() - getBetsize()); // Ändrar cash till vad vi har nu minus vad vi satsade
+					winCheck = "du vann!";
 				}
 				var color = "#00cd00";
 			} else if(spot > 18) { // Det blev rött
 				if(correct == 1) {
 					setCash(getCash() + (getBetsize() * 2));
-				} else {
-					setCash(getCash() - getBetsize());
+					winCheck = "du vann!";
 				}
 				var color = "#f00";
 			} else { // Det blev svart
 				if(correct == 2) {
 					setCash(getCash() + (getBetsize() * 2));
-				} else {
-					setCash(getCash() - getBetsize());
+					winCheck = "du vann!";
 				}
 				var color = "#000";
 			}
-			log("Kulan landade på <span style='color: "+color+"'>"+spot+"</span>");
+			log("Kulan landade på <span style='color: "+color+"'>"+spot+"</span> så "+winCheck);
 		} else {
-			log("Du har satsat mer än du har, din fattiga typ.");
+			log("Du har inte satsat tillräckligt.");
 		}
 	} else {
-		log("Du har inte satsat tillräckligt.");
+		log("Du har satsat mer än du har, din fattiga typ.");
 	}
 }
 function get(id) {
@@ -64,6 +63,8 @@ function getBet() {
 </script>
 </head>
 <body>
+<div style="text-align: center;">
+<canvas id="c" width="500" height="500" style="border: 1px solid #000;"></canvas>
 <p id="cash">25000</p>
 <input type="text" id="betsize" value="5"><br>
 <input type="radio" name="bet" id="green">Grön(x20)<br>
@@ -71,6 +72,7 @@ function getBet() {
 <input type="radio" name="bet" id="black">Svart(x2)<br>
 <input type="button" value="SPIN" onclick="play();">
 <p id="log"></p>
+</div>
 </body>
 </html>
 
