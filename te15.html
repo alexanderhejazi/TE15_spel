@@ -13,20 +13,23 @@ function play() {
 				} else {
 					setCash(getCash() - getBetsize()); // Ändrar cash till vad vi har nu minus vad vi satsade
 				}
+				var color = "#00cd00";
 			} else if(spot > 18) { // Det blev rött
 				if(correct == 1) {
 					setCash(getCash() + (getBetsize() * 2));
 				} else {
 					setCash(getCash() - getBetsize());
 				}
+				var color = "#f00";
 			} else { // Det blev svart
 				if(correct == 2) {
 					setCash(getCash() + (getBetsize() * 2));
 				} else {
 					setCash(getCash() - getBetsize());
 				}
+				var color = "#000";
 			}
-			log("Kulan landade på "+spot);
+			log("Kulan landade på <span style='color: "+color+"'>"+spot+"</span>");
 		} else {
 			log("Du har satsat mer än du har, din fattiga typ.");
 		}
