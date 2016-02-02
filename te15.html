@@ -28,13 +28,19 @@ function play() {
 				}
 				var color = "#000";
 			}
-			log("Kulan landade på <span style='color: "+color+"'>"+spot+"</span> så "+winCheck);
+			spin();
+			var msg = "Kulan landade på <span style='color: "+color+"'>"+spot+"</span> så "+winCheck;
+			document.getElementById("spin").disabled = true;
 		} else {
 			log("Du har inte satsat tillräckligt.");
 		}
 	} else {
 		log("Du har satsat mer än du har, din fattiga typ.");
 	}
+}
+function spin() {
+	r2 = 20+(Math.random()*10);
+	timer = setInterval(ticker, 20);
 }
 function get(id) {
 	return parseInt(document.getElementById(id).value);
@@ -90,13 +96,31 @@ function clear() {
 function ticker() {
 	clear();
 	drawFilledCircle(250, 250, 200, "#000", d2r(0), d2r(360));
-	
+	drawFilledCircle(250, 250, 190, "#fff", d2r(0), d2r(360));
+	drawFilledCircle(250, 250, 190, "#0a0", d2r(r), d2r((360/37)+r));
+	var switcher = "#f00";
+	for(var q = 1; q < 37; q++) {
+		drawFilledCircle(250, 250, 190, switcher, d2r(((360/37)*q)+r), d2r(((360/37)*(q+1))+r));
+		if(switcher == "#f00") {
+			switcher = "#000";
+		} else {
+			switcher = "#f00";
+		}
+	}
+	if(r2 < 0) {
+		clearInterval(timer);
+		document.getElementById("spin").disabled = false;
+	}
+	r += r2;
+	r2 -= 0.2;
 }
 var r = 0;
+var r2 = 0;
 var c = null;
+var timer = null;
 function loaded() {
 	c = getCanvas();
-	setInterval(ticker, 20);
+	ticker();
 }
 </script>
 </head>
@@ -108,7 +132,7 @@ function loaded() {
 <input type="radio" name="bet" id="green">Grön(x20)<br>
 <input type="radio" name="bet" id="red" checked>Röd(x2)<br>
 <input type="radio" name="bet" id="black">Svart(x2)<br>
-<input type="button" value="SPIN" onclick="play();">
+<input type="button" id="spin" value="SPIN" onclick="play();">
 <p id="log"></p>
 </div>
 </body>
