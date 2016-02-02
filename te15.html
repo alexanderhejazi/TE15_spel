@@ -53,16 +53,54 @@ function log(txt) {
 }
 function getBet() {
 	var ret;
-	for(var c = 0; c < document.getElementsByName("bet").length; c++) {
-		if(document.getElementsByName("bet")[c].checked) {
-			ret = c;
+	for(var q = 0; q < document.getElementsByName("bet").length; q++) {
+		if(document.getElementsByName("bet")[q].checked) {
+			ret = q;
 		}
 	}
 	return ret;
 }
+function r2d(rad) {
+	return rad*180/Math.PI;
+}
+function d2r(deg) {
+	return deg*Math.PI/180;
+}
+function getCanvas() {
+	var canvas = document.getElementById("c");
+	var ctx = canvas.getContext("2d");
+	return ctx;
+}
+function drawCircle(x, y, radie, borderSize, color) {
+	c.beginPath();
+	c.arc(x, y, radie, 0, 2*Math.PI);
+	c.stroke();
+}
+function drawFilledCircle(x, y, radie, color, start, stop) {
+	c.beginPath();
+	c.arc(x, y, radie, start, stop);
+	c.lineTo(250, 250);
+	c.fillStyle = color;
+	c.fill();
+	c.stroke();
+}
+function clear() {
+	c.clearRect(0, 0, 500, 500);
+}
+function ticker() {
+	clear();
+	drawFilledCircle(250, 250, 200, "#000", d2r(0), d2r(360));
+	
+}
+var r = 0;
+var c = null;
+function loaded() {
+	c = getCanvas();
+	setInterval(ticker, 20);
+}
 </script>
 </head>
-<body>
+<body onload="loaded();">
 <div style="text-align: center;">
 <canvas id="c" width="500" height="500" style="border: 1px solid #000;"></canvas>
 <p id="cash">25000</p>
